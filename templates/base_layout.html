@@ -1,0 +1,41 @@
+{%load static from staticfiles%}
+
+
+
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <title> Article page</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+ </head>
+ <body>
+    <header class="wrapper">
+
+        <h1><a href="{% url 'home' %}"><img src="{% static 'image.png' %}">WELCOME to Blog</a></h1>
+          <nav>
+              <ul>
+                  {% if user.is_authenticated %}
+                  <li>
+                      <form class="logout-link" action="/accounts/logout/" method="post">
+                        {% csrf_token %}
+                        <button type="submit">LOGOUT</button>
+                      </form>
+                  </li>
+                  <li><a href="{% url 'articles:create' %}" class="highlight">Create Article</a></li>
+                  {%else%}
+
+                      <li><a href="{% url 'accounts:login'%}" class="nalogsign">LOGIN</a></li>
+                      <li><a href="{% url 'accounts:signup' %}" class="nalogsign">SIGNUP</a></li>
+
+                  {%endif%}
+              </ul>
+          </nav>
+    </header>
+        <div class="wrapper">
+        {% block content %}
+        {% endblock %}
+        </div>
+
+ </body>
+</html>
